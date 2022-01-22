@@ -1,0 +1,17 @@
+<!-- <p>calender works!</p> -->
+<full-calendar 
+  #fullcalendar
+  [options]="calendarOptions"
+  [deepChangeDetection]="true"
+>
+</full-calendar>
+<!-- <button (click)="panel.toggle($event)">toggle weekends</button> -->
+<!-- <button (click)="handleClick()">toggle weekends</button> -->
+
+
+
+<p-overlayPanel #panel [dismissable]="true" [showCloseIcon]="true">
+  <ng-template pTemplate>
+      <h5>{{ eventSelected }}</h5>
+  </ng-template>
+</p-overlayPanel>

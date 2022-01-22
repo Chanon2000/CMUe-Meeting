@@ -1,0 +1,18 @@
+.box__login {
+  width: 500px;
+  height: 500px;
+
+  position: fixed;
+  top:15%;
+  left: 34%;
+
+  background-color: antiquewhite;
+  border-radius: 5px;
+  // border-style: solid;
+  box-shadow: 0 2rem 6rem rgba(0,0,0,.3);
+
+  &--content {
+    width: inherit;
+    height: inherit;
+  }
+}

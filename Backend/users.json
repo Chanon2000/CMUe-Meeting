@@ -1,0 +1,41 @@
+[{
+  "_id": {
+    "$oid": "61e448cd82d6f9bee54892e0"
+  },
+  "role": "user",
+  "firstname": "Chanon",
+  "lastname": "Manojit",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61e94ba8a3f3e4b40b8a7624"
+  },
+  "role": "user",
+  "firstname": "admin",
+  "lastname": "admin",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61e94bc1a3f3e4b40b8a7625"
+  },
+  "role": "user",
+  "firstname": "developer",
+  "lastname": "devdevdev",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61e94bdaa3f3e4b40b8a7626"
+  },
+  "role": "user",
+  "firstname": "May",
+  "lastname": "sundod",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61e94beda3f3e4b40b8a7627"
+  },
+  "role": "user",
+  "firstname": "Chan",
+  "lastname": "devdev",
+  "__v": 0
+}]
