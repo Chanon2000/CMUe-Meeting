@@ -39,4 +39,8 @@ export class LayoutComponent implements OnInit {
     this.showSidebar = !this.showSidebar;
   }
 
+  logout() {
+    
+  }
+
 }

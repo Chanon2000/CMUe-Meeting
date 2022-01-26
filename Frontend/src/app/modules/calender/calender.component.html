@@ -8,10 +8,32 @@
 <!-- <button (click)="panel.toggle($event)">toggle weekends</button> -->
 <!-- <button (click)="handleClick()">toggle weekends</button> -->
 
-
- 
-<p-overlayPanel #panel [dismissable]="true" [showCloseIcon]="true">
+<p-overlayPanel #panelEvent [dismissable]="true" [showCloseIcon]="true">
   <ng-template pTemplate>
-      <h5>{{ eventSelected }}</h5>
+    <p-avatar label="M"></p-avatar> {{ eventSelected.event.title }}
+    
+    <p-divider></p-divider>
+    <div *ngIf="!eventSelected.event.allDay">
+      <p>เวลาเริ่ม: {{eventSelected.event.start | date}}</p>
+      <p>เวลาเลิก: {{eventSelected.event.end | date}}</p>
+    </div>
+    <div *ngIf="eventSelected.event.allDay">
+      <p>วันที่: {{eventSelected.event.start | date}} (ทั้งวัน)</p>
+    </div>
+    <p>รูปแบบการประชุม: {{ eventSelected.event.extendedProps.type }}</p>
+    <p>ผู้ทำการนัดหมาย: {{eventSelected.event.extendedProps.boss_id}}</p>
+    <p>ผู้เข้าร่วมการประชุม: 
+      <span *ngFor="let user_id of eventSelected.event.extendedProps.participant_id">
+        {{user_id}}
+      </span>
+    </p>
+    <!-- <p>{{eventSelected.event.extendedProps.detail}}</p> -->
+    
+    <button pButton label="แก้ไข" (click)="editEvent()" class="p-button-warning mr-3"></button>
+    <button pButton label="ลบ" (click)="deleteEvent()" class="p-button-danger mr-3"></button>
+    <span *ngIf="eventSelected.event.extendedProps.type === 'online'">
+      <a [href]="eventSelected.event.extendedProps.meeting_link" pButton >Link for meeting</a>
+    </span>
+    
   </ng-template>
 </p-overlayPanel>

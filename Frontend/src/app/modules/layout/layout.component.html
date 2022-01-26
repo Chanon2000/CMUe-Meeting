@@ -44,10 +44,16 @@
                 </a>
                 <div class="image_outer_container">
                   <div class="image_inner_container">
+                    <div ngbDropdown class="d-inline-block" display="dynamic" placement="bottom-right">
                       <p-avatar 
                         shape="circle" 
                         image="../../assets/users/100_5.jpg"
+                        ngbDropdownToggle
                       ></p-avatar>
+                      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                        <button ngbDropdownItem (click)="logout()">Log out</button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -69,4 +75,4 @@
 </div>
 
 
-<!-- <p-toast key="alertApp" [baseZIndex]="10001"></p-toast> -->
+<p-toast key="alertApp" [baseZIndex]="10001"></p-toast>

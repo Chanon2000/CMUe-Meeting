@@ -10,6 +10,10 @@ import { CallbackComponent } from './modules/callback/callback.component';
 import { LayoutComponent } from './modules/layout/layout.component';
 import { CalenderComponent } from './modules/calender/calender.component';
 import { HomeComponent } from './modules/home/home.component';
+import { RegisterComponent } from './modules/register/register.component';
+import { MemberComponent } from './modules/member/member.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -20,15 +24,19 @@ import { HomeComponent } from './modules/home/home.component';
     AppComponent,
     LoginComponent,
     CallbackComponent,
-    HomeComponent
+    HomeComponent,
+    RegisterComponent,
+    MemberComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     SharedModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+    NgbModule
   ],
-  providers: [],
+  // providers: [ HTTP_INTERCEPTORS ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

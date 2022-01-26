@@ -1,101 +1,114 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, forwardRef, OnInit, ViewChild } from '@angular/core';
 import { CalendarOptions, FullCalendarComponent, DateSelectArg, EventClickArg, EventApi  } from '@fullcalendar/angular'; // useful for typechecking
 import { OverlayPanel } from 'primeng/overlaypanel';
 // import { INITIAL_EVENTS, createEventId } from './event-utils';
-import { formatRange } from '@fullcalendar/core'
+import { Calendar, formatRange } from '@fullcalendar/core'
+import { MeetingService } from 'src/app/services/meeting.service';
+import {DialogService} from 'primeng/dynamicdialog';
+import { AddMeetingDialogComponent } from './add-meeting-dialog/add-meeting-dialog.component';
+import { EditMeetingDialogComponent } from './edit-meeting-dialog/edit-meeting-dialog.component';
 
 @Component({
   selector: 'app-calender',
   templateUrl: './calender.component.html',
-  styleUrls: ['./calender.component.scss']
+  styleUrls: ['./calender.component.scss'],
+  providers: [DialogService]
 })
 export class CalenderComponent implements OnInit {
-  @ViewChild('panel',{static:true}) panel?: OverlayPanel;
+  @ViewChild('panelEvent',{static:true}) panelEvent?: OverlayPanel;
   @ViewChild('fullcalendar') fullcalendar?: FullCalendarComponent;
 
   eventSelected:any;
-  meeting?: any[] = [
-    { title: 'event 1', date: '2022-01-01' },
-    { title: 'event 2', date: '2022-01-02' },
-    { title: 'event 3', date: '2022-01-20' },
-    { title: 'event 4', date: '2022-01-18' },
-    { title: 'event 5', date: '2022-01-10' },
-  ];
+  dateSelected:any;
+  meeting?: any[]
 
-  calendarOptions: CalendarOptions = {
+  calendarOptions?: CalendarOptions;
 
-    //#Calender
-    timeZone: 'UTC',
-    initialView: 'timeGridWeek',
-    // weekends: false,
-    selectable: true,
-    select: this.handleDateSelect.bind(this),
-    // unselect
-    handleWindowResize: true,
-    themeSystem: 'bootstrap',
-    headerToolbar: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
-    },
-    // weekNumbers: true,
-    dayMaxEvents: true,
-
-    //#Date
-    // dateClick: this.handleDateClick.bind(this),
-
-    //#Event
-    eventClick: this.handleEventClick.bind(this),
-    editable: true,
-    // eventMouseEnter: this.handleMouseEnter.bind(this),
-    // eventMouseLeave: this.handleMouseLeave.bind(this),
-    events: this.meeting
-    // events: 'https://fullcalendar.io/demo-events.json'
+  constructor(
+    private meetingService: MeetingService,
+    public dialogService: DialogService
+  ) {
     
-  };
-
-  constructor() {
   }
 
   ngOnInit(): void {
-    // 
+    this.meetingService.getMeetingAll().subscribe((data) => {
+      console.log(data[0])
+      this.meeting = data[0]
+      forwardRef(() => Calendar);
+
+      this.calendarOptions = {
+
+        //#Calender
+        timeZone: 'UTC',
+        initialView: 'timeGridWeek',
+        // weekends: false,
+        selectable: true,
+        select: this.handleDateSelect.bind(this),
+        // unselect
+        handleWindowResize: true,
+        themeSystem: 'bootstrap',
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+        },
+        // weekNumbers: true,
+        dayMaxEvents: true,
+    
+        //#Date
+        // dateClick: this.handleDateSelect.bind(this),
+    
+        //#Event
+        eventClick: this.handleEventClick.bind(this),
+        editable: true,
+        // eventMouseEnter: this.handleMouseEnter.bind(this),
+        // eventMouseLeave: this.handleMouseLeave.bind(this),
+        events: this.meeting
+        // events: 'https://fullcalendar.io/demo-events.json'
+      };
+    })
   }
 
   handleDateSelect(dateInfo:any) {
     console.log(dateInfo)
-    const title = prompt('Please enter a new title for your event');
-    const calendarApi = dateInfo.view.calendar;
+    this.dateSelected = dateInfo;
 
-    calendarApi.unselect(); // clear date selection
-
-    if (title) {
-      let newEvent = {
-        // id: createEventId(),
-        title,
-        start: dateInfo.startStr,
-        end: dateInfo.endStr,
-        allDay: dateInfo.allDay
-      }
-      // calendarApi.addEvent(newEvent);
-
-      this.meeting?.push(newEvent)
-    }
-    
-    console.log(this.meeting)
+    const ref = this.dialogService.open(AddMeetingDialogComponent, {
+      data: this.dateSelected,
+      header: 'เพิ่มการประชุม',
+      width: '50%'
+    });
   }
 
 
   handleEventClick(clickInfo:EventClickArg) {
     console.log(clickInfo)
-    this.eventSelected = clickInfo.event.title;
-    this.panel?.toggle(clickInfo.jsEvent, clickInfo.jsEvent.target)
+    this.eventSelected = clickInfo;
+    this.panelEvent?.toggle(clickInfo.jsEvent, clickInfo.jsEvent.target)
+
+    // console.log(this.eventSelected.event.extendedProps)
+    console.log(this.eventSelected.event.extendedProps.meeting_link)
+  }
+
+  editEvent() {
+    this.panelEvent?.toggle(this.eventSelected.jsEvent, this.eventSelected.jsEvent.target)
+    const ref = this.dialogService.open(EditMeetingDialogComponent, {
+      data: this.dateSelected,
+      header: 'แก้ไขการประชุม',
+      width: '50%'
+    });
+  }
+
+  deleteEvent() {
+    
   }
 
 
 
 
-  toggleWeekends() {
-    this.calendarOptions.weekends = !this.calendarOptions.weekends // toggle the boolean!
-  }
+  // toggleWeekends() {
+  //   this.calendarOptions.weekends = !this.calendarOptions.weekends // toggle the boolean!
+  // }
 
 }

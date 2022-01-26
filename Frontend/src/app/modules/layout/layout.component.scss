@@ -235,7 +235,7 @@
 
   //box-shadow: var(--shadow-dark);
   min-height: 100vh;
-  z-index: 9999;
+  z-index: 1000;
 
   @media screen and (max-width: 768px) { // ipad
     min-width: 143px;

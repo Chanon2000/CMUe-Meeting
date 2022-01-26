@@ -9,13 +9,17 @@ import {PanelMenuModule} from 'primeng/panelmenu';
 import {AvatarModule} from 'primeng/avatar';
 import {AvatarGroupModule} from 'primeng/avatargroup';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
+import {ToastModule} from 'primeng/toast';
+import {DividerModule} from 'primeng/divider';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
+import {DynamicDialogModule} from 'primeng/dynamicdialog';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -36,7 +40,11 @@ FullCalendarModule.registerPlugins([
     PanelMenuModule,
     AvatarModule,
     AvatarGroupModule,
-    OverlayPanelModule
+    OverlayPanelModule,
+    NgbModule,
+    ToastModule,
+    DividerModule,
+    DynamicDialogModule
   ],
   exports: [
     InputTextModule,
@@ -47,7 +55,11 @@ FullCalendarModule.registerPlugins([
     PanelMenuModule,
     AvatarModule,
     AvatarGroupModule,
-    OverlayPanelModule
+    OverlayPanelModule,
+    NgbModule,
+    ToastModule,
+    DividerModule,
+    DynamicDialogModule
   ]
 })
 

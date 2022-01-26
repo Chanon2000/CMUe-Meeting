@@ -23,7 +23,8 @@
     "jsonwebtoken": "^8.5.1",
     "helmet": "^4.6.0",
     "hpp": "^0.2.3",
-    "bcryptjs": "^2.4.3"
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5"
   },
   "devDependencies": {
     "eslint": "^5.16.0",

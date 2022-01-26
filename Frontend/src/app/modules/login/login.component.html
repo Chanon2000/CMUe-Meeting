@@ -3,17 +3,32 @@
   <!-- align-items-center เพื่อให้อยู่ตรงกลางในแนวนอน -->
 
     <div class="flex flex-column align-items-center">
+      <!-- <div class="card"> -->
       <div>
-        <h1>login works!</h1>
+        <div class="field">
+          <label for="firstname1">Email</label>
+          <input pInputText id="firstname1" type="text" class="inputfield w-full" >
+        </div>
+        <div class="field">
+          <label for="lastname1">Password</label>
+          <input pInputText id="lastname1" type="password" class="inputfield w-full">
+        </div>
       </div>
       <div>
-        <a pButton pRipple 
+        <button pButton pRipple 
           type="button"
-          label="Login with CMU account"
+          label="Login"
           routerLink="/admin/home"
+          class="mr-2"
         >
         <!-- href="{{apiUrl}}/api/login" -->
-        </a>    
+        </button>
+        <button pButton pRipple 
+          type="button"
+          label="Sign Up"
+          routerLink="/register"
+        >
+        </button>
       </div>
     </div>
   
