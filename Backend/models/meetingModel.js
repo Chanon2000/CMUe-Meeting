@@ -44,10 +44,8 @@ const meetingSchema = new mongoose.Schema(
     },
     participant_id: [
       {
-        type: {
-          type: mongoose.Schema.ObjectId,
-          ref: 'User'
-        }
+        type: mongoose.Schema.ObjectId,
+        ref: 'User'
       }
     ]
   }

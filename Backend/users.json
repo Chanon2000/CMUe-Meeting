@@ -1,41 +1,51 @@
 [{
-  "_id": {
-    "$oid": "61e448cd82d6f9bee54892e0"
-  },
-  "role": "user",
+  "email": "admin@cmu.ac.th",
+  "prename": "Mr.",
+  "firstname": "Admin",
+  "lastname": "Demo",
+  "meeting_id": [
+
+  ],
+  "password":"pass1234",
+  "passwordConfirm": "pass1234"
+},{
+  "email": "test@cmu.ac.th",
+  "prename": "Mr.",
   "firstname": "Chanon",
   "lastname": "Manojit",
-  "__v": 0
+  "meeting_id": [
+    
+  ],
+  "password":"12345678",
+  "passwordConfirm": "12345678"
 },{
-  "_id": {
-    "$oid": "61e94ba8a3f3e4b40b8a7624"
-  },
-  "role": "user",
-  "firstname": "admin",
-  "lastname": "admin",
-  "__v": 0
+  "email": "test1@cmu.ac.th",
+  "prename": "Mr.",
+  "firstname": "Developer",
+  "lastname": "Devdevdev",
+  "meeting_id": [
+    
+  ],
+  "password":"passpass",
+  "passwordConfirm": "passpass"
 },{
-  "_id": {
-    "$oid": "61e94bc1a3f3e4b40b8a7625"
-  },
-  "role": "user",
-  "firstname": "developer",
-  "lastname": "devdevdev",
-  "__v": 0
-},{
-  "_id": {
-    "$oid": "61e94bdaa3f3e4b40b8a7626"
-  },
-  "role": "user",
+  "email": "test_admin@cmu.ac.th",
+  "prename": "Mr.",
   "firstname": "May",
-  "lastname": "sundod",
-  "__v": 0
+  "lastname": "Sundod",
+  "meeting_id": [
+    
+  ],
+  "password":"password",
+  "passwordConfirm": "password"
 },{
-  "_id": {
-    "$oid": "61e94beda3f3e4b40b8a7627"
-  },
-  "role": "user",
+  "email": "text2@cmu.ac.th",
+  "prename": "Mr.",
   "firstname": "Chan",
-  "lastname": "devdev",
-  "__v": 0
+  "lastname": "Devdev",
+  "meeting_id": [
+    
+  ],
+  "password":"password123",
+  "passwordConfirm": "password123"
 }]
