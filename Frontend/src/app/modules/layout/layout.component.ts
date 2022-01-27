@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {MenuItem} from 'primeng/api';
+import { AuthService } from '../auth/_services/auth.service';
 
 @Component({
   selector: 'app-layout',
@@ -11,8 +13,14 @@ export class LayoutComponent implements OnInit {
   // items?: MenuItem[]; // error in html (model)
   items: MenuItem[] = [];
   showSidebar: boolean = true;
+  currentUser:any;
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {
+    this.currentUser = this.authService.getUserDetail();
+  }
 
   ngOnInit(): void {
     this.items = [
@@ -40,7 +48,12 @@ export class LayoutComponent implements OnInit {
   }
 
   logout() {
-    
+    localStorage.removeItem('userDetails');
+    localStorage.removeItem('userDetailToken');
+    localStorage.removeItem('login');
+    this.router.navigate(['/login'], {
+      queryParams: {},
+    });
   }
 
 }

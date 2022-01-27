@@ -1,25 +1,60 @@
 <div class="box__login flex flex-column align-items-center justify-content-center">
+<!-- <div class="box__login login__form"> -->
   <!-- justify-content-center เพื่อให้อยู่ตรงกลางในแนวตั้ง -->
   <!-- align-items-center เพื่อให้อยู่ตรงกลางในแนวนอน -->
 
-    <div class="flex flex-column align-items-center">
+    <!-- <div class="flex flex-column align-items-center"> -->
       <!-- <div class="card"> -->
-      <div>
+      <form [formGroup]="loginForm" *ngIf="loginForm" class="login__form">
         <div class="field">
           <label for="firstname1">Email</label>
-          <input pInputText id="firstname1" type="text" class="inputfield w-full" >
+          <div>
+            <input pInputText 
+              id="firstname1" 
+              formControlName="email" 
+              type="text" 
+              class="inputfield w-full" 
+              placeholder="Email"
+              [ngClass]="{'ng-invalid ng-dirty':submitted && f?.['email']?.errors }"
+            >
+          </div>
+          
+          <!-- !err -->
+          <app-error-message 
+            [control]="f?.['email']" 
+            nameField="อีเมล" 
+            [submitted]="submitted"
+          ></app-error-message>
         </div>
         <div class="field">
           <label for="lastname1">Password</label>
-          <input pInputText id="lastname1" type="password" class="inputfield w-full">
+          <!-- <div> -->
+              <!-- <p-password  [feedback]="false" [toggleMask]="true"></p-password> -->
+              <!-- <input type="password" pPassword /> -->
+            <!-- <input type="password" pPassword [toggleMask]="true"/> -->
+          <!-- </div> -->
+          <input pInputText 
+            id="lastname1" 
+            formControlName="password"
+            type="password" 
+            class="inputfield w-full" 
+            placeholder="Password"
+            [ngClass]="{'ng-invalid ng-dirty':submitted && f?.['email']?.errors }"
+          >
+          <!-- !err -->
+          <app-error-message 
+            [control]="f?.['password']" 
+            nameField="รหัสผ่าน" 
+            [submitted]="submitted"
+          ></app-error-message>
         </div>
-      </div>
+      </form>
       <div>
         <button pButton pRipple 
           type="button"
           label="Login"
-          routerLink="/admin/home"
-          class="mr-2"
+          (click)="onLogin()"
+          class="mr-2 p-button-success"
         >
         <!-- href="{{apiUrl}}/api/login" -->
         </button>
@@ -30,9 +65,12 @@
         >
         </button>
       </div>
-    </div>
+    <!-- </div> -->
   
 </div>
 
 <!-- flex ถ้าไม่ใส่ มันจะไม่เป็น flex ด้วยซำ้ -->
 <!-- align-items-center: ให้อยู่ center ตามแนว cross axis -->
+
+
+<p-toast key="alertLogin" [baseZIndex]="20001"></p-toast>

@@ -10,12 +10,12 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
-        path: 'home',
-        component: HomeComponent,
-      },
-      {
         path: 'calender',
         loadChildren: () => import('../calender/calender.module').then((m) => m.CalenderModule)
+      },
+      {
+        path: 'home',
+        component: HomeComponent,
       },
       { path:'*', redirectTo: 'home', pathMatch: 'full' },
       { path:'**', redirectTo: 'home', pathMatch: 'full' },

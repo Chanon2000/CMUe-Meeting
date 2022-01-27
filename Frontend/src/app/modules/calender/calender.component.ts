@@ -7,6 +7,7 @@ import { MeetingService } from 'src/app/services/meeting.service';
 import {DialogService} from 'primeng/dynamicdialog';
 import { AddMeetingDialogComponent } from './add-meeting-dialog/add-meeting-dialog.component';
 import { EditMeetingDialogComponent } from './edit-meeting-dialog/edit-meeting-dialog.component';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-calender',
@@ -21,19 +22,21 @@ export class CalenderComponent implements OnInit {
   eventSelected:any;
   dateSelected:any;
   meeting?: any[]
+  userAll?: any[]
 
   calendarOptions?: CalendarOptions;
 
   constructor(
     private meetingService: MeetingService,
-    public dialogService: DialogService
+    public dialogService: DialogService,
+    private usersService: UsersService
   ) {
     
   }
 
   ngOnInit(): void {
     this.meetingService.getMeetingAll().subscribe((data) => {
-      console.log(data[0])
+      // console.log(data[0])
       this.meeting = data[0]
       forwardRef(() => Calendar);
 
@@ -68,27 +71,31 @@ export class CalenderComponent implements OnInit {
         // events: 'https://fullcalendar.io/demo-events.json'
       };
     })
+
+    this.usersService.getUserAll().subscribe((data:any) => {
+      this.userAll = data.data.data
+    })
   }
 
   handleDateSelect(dateInfo:any) {
-    console.log(dateInfo)
+    // console.log(dateInfo)
     this.dateSelected = dateInfo;
 
     const ref = this.dialogService.open(AddMeetingDialogComponent, {
       data: this.dateSelected,
       header: 'เพิ่มการประชุม',
-      width: '50%'
+      width: '50%',
+      height: '700px',
     });
   }
 
 
   handleEventClick(clickInfo:EventClickArg) {
-    console.log(clickInfo)
+    // console.log(clickInfo)
     this.eventSelected = clickInfo;
     this.panelEvent?.toggle(clickInfo.jsEvent, clickInfo.jsEvent.target)
 
-    // console.log(this.eventSelected.event.extendedProps)
-    console.log(this.eventSelected.event.extendedProps.meeting_link)
+    // console.log(this.eventSelected.event.extendedProps.meeting_link)
   }
 
   editEvent() {
@@ -104,7 +111,16 @@ export class CalenderComponent implements OnInit {
     
   }
 
-
+  translateUser(id:any):string {
+    let name:string = '';
+    // console.log(this.userAll)
+    this.userAll?.forEach((user:any) => {
+      if (user._id === id) {
+        name = `${user.prename} ${user.firstname} ${user.lastname}`
+      }
+    })
+    return name;
+  }
 
 
   // toggleWeekends() {

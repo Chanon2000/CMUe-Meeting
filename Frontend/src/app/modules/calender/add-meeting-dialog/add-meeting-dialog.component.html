@@ -1,1 +1,65 @@
-<p>add-meeting-dialog works!</p>
+<div class="row">
+  <p *ngIf="dateSelected.allDay">
+    วันที่เริ่ม: {{dateSelected.start | date:'d/M/yy'}}
+    วันที่เลิก: {{dateSelected.end | date:'d/M/yy'}}
+  </p>
+  <p *ngIf="!dateSelected.allDay">
+    เวลาที่เริ่ม: {{dateSelected.start | date:'d/M/yy, h:mm a'}}
+    เวลาที่เลิก: {{dateSelected.end | date:'d/M/yy, h:mm a'}}
+  </p>
+</div>
+<div class="row">
+  <input 
+    type="text" 
+    pInputText 
+    placeholder="ชื่อการประชุม" 
+  />
+
+  <p-dropdown 
+    [options]="[{typeName:'online'},{typeName:'onsite'}]"
+    optionLabel="typeName"
+    optionValue="typeName"
+    placeholder="ประเภทการประชุม"
+    [style]="{'width': '100%'}"
+  >
+  </p-dropdown>
+
+  <input 
+    type="text" 
+    pInputText 
+    placeholder="Link for meeting" 
+  />
+
+  <p-dropdown 
+    [options]="userAll"
+    [(ngModel)]="selectedUserId"
+    *ngIf="userAll"
+    optionValue="_id"
+    placeholder="เลือกผู้เข้าร่วมการประชุม"
+    [style]="{'width': '100%'}"
+  >
+    <ng-template let-user pTemplate="selectedItem">
+      {{user.prename}} {{user.firstname}} {{user.lastname}}
+    </ng-template>
+    <ng-template let-user pTemplate="item">
+      {{user.prename}} {{user.firstname}} {{user.lastname}}
+    </ng-template>
+  </p-dropdown>
+
+  <button pButton pRipple (click)="handleSelectUser()" label="เพิ่ม"></button>
+
+    <div *ngIf="f?.['participant_id']?.value">
+      <div class="row" *ngFor="let participant_id of f?.['participant_id']?.value">
+        <div class="col-md-5 pr-0">
+          <div class="bg-box-1 d-flex">
+            <span class="align-self-center pr-5">{{ getUserName(participant_id) }}</span>
+            <span class="ml-auto mr-2 mt-1 cursor-pointer text-pink-500"
+            (click)="RemoveParticipant(participant_id)"
+            >
+              <i class="pi pi-trash" ></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
@@ -11,6 +12,8 @@ import {AvatarGroupModule} from 'primeng/avatargroup';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
 import {ToastModule} from 'primeng/toast';
 import {DividerModule} from 'primeng/divider';
+import { TagModule } from 'primeng/tag';
+import {DropdownModule} from 'primeng/dropdown';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -20,6 +23,8 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
 import {DynamicDialogModule} from 'primeng/dynamicdialog';
+import {PasswordModule} from 'primeng/password';
+import { ErrorMessageComponent } from './error-message/error-message.component';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -29,7 +34,7 @@ FullCalendarModule.registerPlugins([
 ]);
 
 @NgModule({
-  declarations: [],
+  declarations: [ErrorMessageComponent],
   imports: [
     CommonModule,
     InputTextModule,
@@ -44,7 +49,12 @@ FullCalendarModule.registerPlugins([
     NgbModule,
     ToastModule,
     DividerModule,
-    DynamicDialogModule
+    DynamicDialogModule,
+    PasswordModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TagModule,
+    DropdownModule
   ],
   exports: [
     InputTextModule,
@@ -59,7 +69,13 @@ FullCalendarModule.registerPlugins([
     NgbModule,
     ToastModule,
     DividerModule,
-    DynamicDialogModule
+    DynamicDialogModule,
+    PasswordModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ErrorMessageComponent,
+    TagModule,
+    DropdownModule
   ]
 })
 

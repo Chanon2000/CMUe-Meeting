@@ -1,38 +1,158 @@
 <div class="box__login flex flex-column align-items-center justify-content-center">
   <div class="">
-    <h5>Advanced</h5>
-    <div class="formgrid grid">
-        <div class="field col-12 md:col-6">
-            <label for="firstname6">Firstname</label>
-            <input pInputText id="firstname6" type="text" class="inputfield w-full">
-        </div>
-        <div class="field col-12 md:col-6">
-            <label for="lastname6">Lastname</label>
-            <input pInputText id="lastname6" type="text" class="inputfield w-full">
-        </div>
-        <div class="field col-12">
-            <label for="address">Address</label>
-            <textarea  id="address" type="text" rows="4" class="inputfield w-full"></textarea>
-        </div>
-        <div class="field col-12 md:col-6">
-            <label for="city">City</label>
-            <input pInputText id="city" type="text" class="inputfield w-full">
-        </div>
-        <div class="field col-12 md:col-3">
-            <label for="state">State</label>
-            <select id="state" class="w-full inputfield" style="appearance: auto">
-                <option>Arizona</option>
-                <option>California</option>
-                <option>Florida</option>
-                <option>Ohio</option>
-                <option>Washington</option>
-            </select>
-        </div>
-        <div class="field col-12 md:col-3">
-            <label for="zip">Zip</label>
-            <input pInputText id="zip" type="text" class="inputfield w-full">
+    <h3>ลงทะเบียน</h3>
+    <div class="row justify-content-center py-12">
+        <div class="col-xl-12 col-xxl-7">
+            <form [formGroup]="signUpForm" *ngIf="signUpForm">
+                <div class="row">
+                    <div class="col-12 col-lg-3 mt-3">
+                        <span class="p-float-label">
+                            <input type="text" 
+                                id="firstName-input"
+                                class="form-control form-control-solid p-float-label" 
+                                pInputText
+                                formControlName="prename"
+                                [ngClass]="{'ng-invalid ng-dirty':submitted && f?.['prename']?.errors}"
+                            >
+                            <label for="firstName-input">คำนำหน้า</label>
+                        </span>
+                        <!-- !err -->
+                        <app-error-message 
+                            [control]="f?.['prename']" 
+                            nameField="คำนำหน้า" 
+                            [submitted]="submitted"
+                        ></app-error-message>
+                    </div>
+                    <div class="col-12 col-lg-4 pl-lg-0 mt-3">
+                        <span class="p-float-label">
+                            <input type="text" 
+                                id="firstName-input"
+                                class="form-control form-control-solid p-float-label" 
+                                pInputText
+                                formControlName="firstname"
+                                [ngClass]="{'ng-invalid ng-dirty':submitted && f?.['firstname']?.errors}"
+                            >
+                            <label for="firstName-input">ชื่อ</label>
+                        </span>
+                        <!-- !err -->
+                        <app-error-message 
+                            [control]="f?.['firstname']"
+                            nameField="ชื่อ"
+                            [submitted]="submitted"
+                        ></app-error-message>
+                    </div>
+                    <div class="col-12 col-lg-4 pl-lg-0 mt-3">
+                        <span class="p-float-label">
+                            <input type="text" 
+                                id="lastName-input"
+                                class="form-control form-control-solid p-float-label" 
+                                pInputText
+                                formControlName="lastname"
+                                [ngClass]="{'ng-invalid ng-dirty':submitted && f?.['lastname']?.errors}"
+                            >
+                            <label for="lastName-input">นามสกุล</label>
+                        </span>
+                        <!-- !err -->
+                        <app-error-message 
+                            [control]="f?.['lastname']" 
+                            nameField="นามสกุล" 
+                            [submitted]="submitted"
+                        ></app-error-message>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-12 col-lg-5 pl-lg-0 mt-3">
+                        <span class="p-float-label">
+                            <input type="text" 
+                                id="firstName-input"
+                                class="form-control form-control-solid p-float-label" 
+                                pInputText
+                                formControlName="email"
+                                [ngClass]="{'ng-invalid ng-dirty':submitted && f?.['email']?.errors}"
+                            >
+                            <label for="firstName-input">อีเมล</label>
+                        </span>
+                        <!-- !err -->
+                        <app-error-message 
+                            [control]="f?.['email']"
+                            nameField="อีเมล"
+                            [submitted]="submitted"
+                        ></app-error-message>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-lg-5 pl-lg-0 mt-3">
+                        <span class="p-float-label">
+                            <input type="password" 
+                                id="firstName-input"
+                                class="form-control form-control-solid p-float-label" 
+                                pInputText
+                                formControlName="password"
+                                [ngClass]="{'ng-invalid ng-dirty':submitted && f?.['password']?.errors}"
+                            >
+                            <label for="firstName-input">password</label>
+                        </span>
+                        <!-- !err -->
+                        <app-error-message 
+                            [control]="f?.['password']"
+                            nameField="password"
+                            [submitted]="submitted"
+                        ></app-error-message>
+                    </div>
+                    <div class="col-12 col-lg-5 pl-lg-0 mt-3">
+                        <span class="p-float-label">
+                            <input type="password" 
+                                id="firstName-input"
+                                class="form-control form-control-solid p-float-label" 
+                                pInputText
+                                formControlName="passwordConfirm"
+                                [ngClass]="{'ng-invalid ng-dirty':submitted && f?.['passwordConfirm']?.errors}"
+                            >
+                            <label for="firstName-input">passwordConfirm</label>
+                        </span>
+                        <!-- !err -->
+                        <app-error-message 
+                            [control]="f?.['passwordConfirm']"
+                            nameField="passwordConfirm"
+                            [submitted]="submitted"
+                        ></app-error-message>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div>
+                        <button 
+                            pButton
+                            pRipple
+                            type="button" 
+                            class="p-button-raised p-button-success mr-3"
+                            label="ยืนยันข้อมูล"
+                            (click)="onSubmit()"
+                        >
+                        </button>
+                        <button 
+                            pButton
+                            pRipple
+                            type="button" 
+                            class="p-button-raised"
+                            label="ยกเลิก"
+                            routerLink="../login"
+                        >
+                        </button>
+                        
+                    </div>
+                </div>
+
+                
+            </form>
         </div>
     </div>
   </div>
   
 </div>
+
+
+<p-toast key="alertSignup" [baseZIndex]="10001"></p-toast>

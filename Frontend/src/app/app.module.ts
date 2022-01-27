@@ -14,7 +14,7 @@ import { RegisterComponent } from './modules/register/register.component';
 import { MemberComponent } from './modules/member/member.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -34,7 +34,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     SharedModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   // providers: [ HTTP_INTERCEPTORS ],
   bootstrap: [AppComponent]

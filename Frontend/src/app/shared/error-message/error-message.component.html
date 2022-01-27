@@ -1,0 +1,8 @@
+<span class="invalid-text" *ngIf="message != null && submitted; else noError">
+  {{ message }}
+</span>
+<ng-template #noError>
+  <span style="visibility: hidden;">
+      onError
+  </span>
+</ng-template>
