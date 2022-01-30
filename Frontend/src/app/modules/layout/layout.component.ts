@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {MenuItem} from 'primeng/api';
 import { AuthService } from '../auth/_services/auth.service';
@@ -15,6 +15,7 @@ export class LayoutComponent implements OnInit {
   showSidebar: boolean = true;
   currentUser:any;
 
+
   constructor(
     private router: Router,
     private authService: AuthService
@@ -25,31 +26,33 @@ export class LayoutComponent implements OnInit {
   ngOnInit(): void {
     this.items = [
       {
-        label: 'Home',
+        label: 'การประชุมของฉัน',
         icon: 'pi pi-th-large',
         routerLink: 'home'
       },
       {
-        label: 'Calender',
+        label: 'การประชุมทั้งหมด',
         icon: 'pi pi-tag',
         routerLink: 'calender',
       },
       {
-        label: 'User',
+        label: 'สมาชิก',
         icon: 'pi pi-tag',
-        routerLink: 'user',
+        routerLink: 'member',
       },
     ]
   }
 
 
-  toggleSidebar() {
-    this.showSidebar = !this.showSidebar;
-  }
+  // toggleSidebar() {
+  //   this.showSidebar = !this.showSidebar;
+  //   // window.location.reload();
+  // }
 
   logout() {
     localStorage.removeItem('userDetails');
     localStorage.removeItem('userDetailToken');
+    localStorage.removeItem('token');
     localStorage.removeItem('login');
     this.router.navigate(['/login'], {
       queryParams: {},

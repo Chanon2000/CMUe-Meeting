@@ -5,13 +5,11 @@ const User = require('./../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 
-
 const signToken = id => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN
   });
 };
-
 
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
@@ -39,7 +37,6 @@ const createSendToken = (user, statusCode, res) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
-  console.log("asdf");
   const newUser = await User.create({
     email: req.body.email,
     prename: req.body.prename,
@@ -49,7 +46,6 @@ exports.signup = catchAsync(async (req, res, next) => {
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm
   });
-  console.log(newUser);
   createSendToken(newUser, 201, res);
 });
 

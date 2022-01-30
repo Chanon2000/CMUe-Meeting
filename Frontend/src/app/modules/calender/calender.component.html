@@ -1,16 +1,21 @@
 <!-- <p>calender works!</p> -->
-<full-calendar 
-  #fullcalendar
-  [options]="calendarOptions"
-  [deepChangeDetection]="true"
->
-</full-calendar>
-<!-- <button (click)="panel.toggle($event)">toggle weekends</button> -->
-<!-- <button (click)="handleClick()">toggle weekends</button> -->
+<div class="container-fluid content-info">
+  <!-- <h1>การประชุมทั้งหมด</h1> -->
+  <full-calendar 
+    #fullcalendar
+    [options]="calendarOptions"
+    [deepChangeDetection]="true"
+  >
+  </full-calendar>
+</div>
 
 <p-overlayPanel #panelEvent [dismissable]="true" [showCloseIcon]="true" styleClass="center-div">
   <ng-template pTemplate>
-    <p-avatar label="M"></p-avatar> {{ eventSelected.event.title }}
+    <p-avatar 
+      icon="pi pi-calendar-plus" 
+      [style]="{'background-color': '#9c27b0', 'color': '#ffffff'}">
+    </p-avatar> 
+    {{ eventSelected.event.title }}
     
     <p-divider></p-divider>
     <div *ngIf="!eventSelected.event.allDay">
@@ -18,9 +23,14 @@
       <p><span style="font-weight: bold;">Ends:</span> {{eventSelected.event.end | date:'d MMM, h:mm a'}}</p>
     </div>
     <div *ngIf="eventSelected.event.allDay">
-      <p><span style="font-weight: bold;">วันที่:</span> {{eventSelected.event.start | date:'d MMM y'}} (ทั้งวัน)</p>
+      <p><span style="font-weight: bold;">Starts:</span> {{eventSelected.event.start | date:'d MMM, h:mm a'}} <span style="font-weight: bold;">(ทั้งวัน)</span></p>
+      <p><span style="font-weight: bold;">Ends:</span> {{eventSelected.event.end | date:'d MMM, h:mm a'}} <span style="font-weight: bold;">(ทั้งวัน)</span></p>
     </div>
-    <p><span style="font-weight: bold;">รูปแบบการประชุม:</span> {{ eventSelected.event.extendedProps.type }}</p>
+    <p><span style="font-weight: bold;">รูปแบบการประชุม:</span>
+      <span *ngIf="eventSelected.event.extendedProps.type == 'online'" style="color:#1E90FF;">&nbsp;<i class="pi pi-compass" style="color:#1E90FF;"></i> ออนไลน์</span>
+      <span *ngIf="eventSelected.event.extendedProps.type == 'onsite'" style="color:#9c27b0;">&nbsp;<i class="pi pi-car" style="color:#9c27b0;"></i> ในสถานที่</span>
+      <!-- {{ eventSelected.event.extendedProps.type }} -->
+    </p>
     <p><span style="font-weight: bold;">ผู้ทำการนัดหมาย:</span> <p-tag [value]="translateUser(eventSelected.event.extendedProps.boss_id)" severity="warning" class="mr-1"></p-tag></p>
     <p><span style="font-weight: bold;">ผู้เข้าร่วมการประชุม: </span>
       <span *ngFor="let user_id of eventSelected.event.extendedProps.participant_id">
@@ -30,11 +40,18 @@
     <p><span style="font-weight: bold;">รายละเอียดการประชุม:</span> {{eventSelected.event.extendedProps.detail}}</p>
     <!-- <p>{{eventSelected.event.extendedProps.detail}}</p> -->
     <p-divider></p-divider>
-    <button pButton label="แก้ไข" (click)="editEvent()" class="p-button-warning mr-3"></button>
-    <button pButton label="ลบ" (click)="deleteEvent()" class="p-button-danger mr-3"></button>
-    <span *ngIf="eventSelected.event.extendedProps.type === 'online'">
-      <a [href]="eventSelected.event.extendedProps.meeting_link" pButton >Link for meeting</a>
-    </span>
+    <!-- <div class="flex justify-content-end"> -->
+      
+      <div class="flex justify-content-end">
+        <div *ngIf="eventSelected.event.extendedProps.meeting_link !== null" class="mr-auto">
+          <a [href]="eventSelected.event.extendedProps.meeting_link" pButton >ลิ้งสำหรับเข้าการประชุม</a>
+        </div>
+        <button *ngIf="eventSelected.event.extendedProps.boss_id === currentUser._id" pButton label="แก้ไข" (click)="handleEditEvent(eventSelected.event.extendedProps._id)" class="p-button-warning mr-3 " icon="pi pi-pencil"></button>
+        <button *ngIf="eventSelected.event.extendedProps.boss_id === currentUser._id" pButton label="ลบ" (click)="handleDeleteEvent(eventSelected.event.extendedProps._id)" class="p-button-danger" icon="pi pi-trash"></button>
+      </div>
+    <!-- </div> -->
+    
+    
     
   </ng-template>
 </p-overlayPanel>

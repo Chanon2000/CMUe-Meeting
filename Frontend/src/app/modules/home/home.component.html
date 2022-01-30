@@ -1,1 +1,170 @@
-<p>home works!</p>
+<div class="container-fluid content-info">
+  <h1>การประชุมของฉัน</h1>
+  <p-table
+    #table
+    dataKey="_id"
+    [loading]="loadingTable"
+    [(rows)]="rows"
+    [(first)]="first"
+    [value]="listMeeting"
+    styleClass="p-datatable-gridlines p-datatable-sm"
+    [globalFilterFields]="['status']"
+    [paginator]="true"
+    [showPageLinks]="false"
+    [showFirstLastIcon]="false"
+    [rowHover]="true"
+    [filterDelay]="0"
+    [rowsPerPageOptions]="[10,25,50, 100]"
+  >
+    <ng-template pTemplate="colgroup">
+      <colgroup>
+          <col style="width: 5%;">
+          <col style="width: 15%;">
+          <col style="width: 20%;">
+          <col style="width: 10%;">
+          <col style="width: 10%;">
+          <col style="width: 20%;">
+          <!-- <col style="width: 10%;">
+          <col style="width: 5%;"> -->
+      </colgroup>
+    </ng-template>
+
+    <ng-template pTemplate="caption">
+      <div class="row d-flex align-items-center mt-2 ml-2">
+        <div class="col-sm-auto">
+          <h5 class="mb-0">เลือกสถานะ</h5>
+        </div>
+        <div class="col-sm-auto pl-0">
+          <form class="category-select">
+            <div class="form-group mb-0">
+              <p-dropdown
+                class="mr-2"
+                name="searchGroup"
+                [options]="[
+                  { name:'ทั้งหมด', value:'' }, 
+                  { name:'ยังไม่เริ่ม', value:'waiting' },
+                  { name:'จบไปแล้ว', value:'finished' },
+                  { name:'ถูกยกเลิก', value:'cancelled' },
+                ]"
+                optionLabel="name"
+                optionValue="value"
+                [style]="{'width': '100%'}" 
+                [(ngModel)]="selectedStatus"
+                (onChange)="table.filterGlobal(selectedStatus, 'equals')"
+              >
+                <ng-template pTemplate="item" let-meetingStatus>
+                  <span *ngIf="meetingStatus.value == ''"><p-tag severity="info">ทั้งหมด</p-tag></span>
+                  <span *ngIf="meetingStatus.value == 'finished'"><p-tag severity="success">จบไปแล้ว</p-tag></span>
+                  <span *ngIf="meetingStatus.value == 'cancelled'"><p-tag severity="danger">ถูกยกเลิก</p-tag></span>
+                  <span *ngIf="meetingStatus.value == 'waiting'"><p-tag severity="warning" >ยังไม่เริ่ม</p-tag></span>
+                </ng-template>
+                <ng-template pTemplate="selectedItem" let-meetingStatus>
+                  <span *ngIf="meetingStatus.value == ''"><p-tag severity="info">ทั้งหมด</p-tag></span>
+                  <span *ngIf="meetingStatus.value == 'finished'"><p-tag severity="success">จบไปแล้ว</p-tag></span>
+                  <span *ngIf="meetingStatus.value == 'cancelled'"><p-tag severity="danger">ถูกยกเลิก</p-tag></span>
+                  <span *ngIf="meetingStatus.value == 'waiting'"><p-tag severity="warning" >ยังไม่เริ่ม</p-tag></span>
+                </ng-template>
+              </p-dropdown>
+            </div>
+          </form>
+        </div>
+      </div>
+    </ng-template>
+
+    <!-- begin::table-head -->
+    <ng-template pTemplate="header" let-columns >
+      <tr>
+        <th class="text-center" > </th>
+        <th class="text-center">การประชุม </th>
+        <th class="text-center" >ผู้ทำการนัดหมาย</th>
+        <th class="text-center">สถานะ</th>
+        <th class="text-center">รูปแบบ</th>
+        <th class="text-center">เวลา</th>
+        <th class="text-center">เต็มวัน/เวลา</th>
+        <th class="text-center">ลิ้ง</th>
+      </tr>
+    </ng-template>
+    <!-- end::table-head -->
+
+    <!-- begin::table-body -->
+    <ng-template pTemplate="body" let-meeting let-expanded="expanded">
+      <!-- begin::row -->
+      <tr class="datatable-row">
+          <!-- <td class="text-center">{{ meeting.bill_no }}</td> -->
+          <td>
+            <button type="button" pButton pRipple [pRowToggler]="meeting" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+          </td>
+          <td class="text-center">{{ meeting.title }} </td>
+          <td class="text-center">{{ translateUser(meeting.boss_id) }}</td>
+          <td class="text-center">
+            <span *ngIf="meeting.status == 'finished'"><p-tag severity="success">จบไปแล้ว</p-tag></span>
+            <span *ngIf="meeting.status == 'cancelled'"><p-tag severity="danger">ถูกยกเลิก</p-tag></span>
+            <span *ngIf="meeting.status == 'waiting'"><p-tag severity="warning" >ยังไม่เริ่ม</p-tag></span>
+          </td>
+          <td class="text-center">
+            <span *ngIf="meeting.type == 'online'" style="color:#1E90FF;"><i class="pi pi-compass" style="color:#1E90FF;"></i> ออนไลน์</span>
+            <span *ngIf="meeting.type == 'onsite'" style="color:#9c27b0;"><i class="pi pi-car" style="color:#9c27b0;"></i> ในสถานที่</span>
+          </td>
+          <td class="text-center">
+            <span *ngIf="meeting.start == null"> - </span>
+            <span *ngIf="meeting.start != null">
+              <span *ngIf="meeting.allDay">
+                <span><span style="font-weight: bold;">Starts:</span> {{ meeting.start | date:'d MMM' }}</span><br>
+                <span><span style="font-weight: bold;">Ends:</span> {{ meeting.end | date:'d MMM' }}</span>
+              </span>
+              <span *ngIf="!meeting.allDay">
+                <span><span style="font-weight: bold;">Starts:</span> {{ meeting.start | date:'d MMM, h:mm a' }}</span><br>
+                <span><span style="font-weight: bold;">Ends:</span> {{ meeting.end | date:'d MMM, h:mm a' }}</span>
+              </span>
+              
+            </span>
+          </td>
+          <td class="text-center">
+            <span *ngIf="meeting.allDay"> เต็มวัน </span>
+            <span *ngIf="!meeting.allDay">  ไม่ทั้งวัน </span>
+          </td>
+          <td class="text-center">
+            <a [href]="meeting.meeting_link"><i class="pi pi-compass" style="cursor: pointer;"></i></a>
+          </td>
+      </tr>
+      <!-- end::row -->
+    </ng-template>
+    <!-- end::table-body -->
+
+    <ng-template pTemplate="rowexpansion" let-product>
+      <tr>
+        <td colspan="8">
+          <div class="p-3">
+            <p-table [value]="product.participant_id" >
+              <ng-template pTemplate="caption">
+                <h5>ผู้เข้าร่วมการประชุม</h5>
+              </ng-template>
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>ชื่อ - นามสกุล</th>
+                  <th>อีเมล</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-participant_id>
+                <tr>
+                  <td>{{translateUser(participant_id)}}</td>
+                  <td>{{translateEmail(participant_id)}}</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <!-- begin::emptymessage -->
+    <ng-template pTemplate="emptymessage" let-columns>
+      <tr>
+        <td colspan="8" style="color: #E3A831;text-align:center;" class="text-2xl">
+            ไม่พบข้อมูล
+        </td>
+      </tr>
+    </ng-template>
+    <!-- end::emptymessage -->
+  </p-table>
+</div>

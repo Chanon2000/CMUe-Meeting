@@ -14,6 +14,9 @@ import {ToastModule} from 'primeng/toast';
 import {DividerModule} from 'primeng/divider';
 import { TagModule } from 'primeng/tag';
 import {DropdownModule} from 'primeng/dropdown';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import {TableModule} from 'primeng/table';
+import {BadgeModule} from 'primeng/badge';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -54,7 +57,10 @@ FullCalendarModule.registerPlugins([
     FormsModule,
     ReactiveFormsModule,
     TagModule,
-    DropdownModule
+    DropdownModule,
+    InputTextareaModule,
+    TableModule,
+    BadgeModule
   ],
   exports: [
     InputTextModule,
@@ -75,7 +81,10 @@ FullCalendarModule.registerPlugins([
     ReactiveFormsModule,
     ErrorMessageComponent,
     TagModule,
-    DropdownModule
+    DropdownModule,
+    InputTextareaModule,
+    TableModule,
+    BadgeModule
   ]
 })
 

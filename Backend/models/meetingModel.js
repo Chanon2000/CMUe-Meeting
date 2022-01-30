@@ -31,6 +31,11 @@ const meetingSchema = new mongoose.Schema(
     },
     status: {
       type: String,
+      enum: {
+        default: 'waiting',
+        values: ['waiting', 'finished','cancelled'],
+        message: 'Status is either: waiting, complete,cancel'
+      }
     },
     createdAt: {
       type: Date,

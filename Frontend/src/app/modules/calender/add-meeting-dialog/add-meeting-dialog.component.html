@@ -1,65 +1,171 @@
-<div class="row">
-  <p *ngIf="dateSelected.allDay">
-    วันที่เริ่ม: {{dateSelected.start | date:'d/M/yy'}}
-    วันที่เลิก: {{dateSelected.end | date:'d/M/yy'}}
-  </p>
-  <p *ngIf="!dateSelected.allDay">
-    เวลาที่เริ่ม: {{dateSelected.start | date:'d/M/yy, h:mm a'}}
-    เวลาที่เลิก: {{dateSelected.end | date:'d/M/yy, h:mm a'}}
-  </p>
-</div>
-<div class="row">
-  <input 
-    type="text" 
-    pInputText 
-    placeholder="ชื่อการประชุม" 
-  />
-
-  <p-dropdown 
-    [options]="[{typeName:'online'},{typeName:'onsite'}]"
-    optionLabel="typeName"
-    optionValue="typeName"
-    placeholder="ประเภทการประชุม"
-    [style]="{'width': '100%'}"
-  >
-  </p-dropdown>
-
-  <input 
-    type="text" 
-    pInputText 
-    placeholder="Link for meeting" 
-  />
-
-  <p-dropdown 
-    [options]="userAll"
-    [(ngModel)]="selectedUserId"
-    *ngIf="userAll"
-    optionValue="_id"
-    placeholder="เลือกผู้เข้าร่วมการประชุม"
-    [style]="{'width': '100%'}"
-  >
-    <ng-template let-user pTemplate="selectedItem">
-      {{user.prename}} {{user.firstname}} {{user.lastname}}
-    </ng-template>
-    <ng-template let-user pTemplate="item">
-      {{user.prename}} {{user.firstname}} {{user.lastname}}
-    </ng-template>
-  </p-dropdown>
-
-  <button pButton pRipple (click)="handleSelectUser()" label="เพิ่ม"></button>
-
-    <div *ngIf="f?.['participant_id']?.value">
-      <div class="row" *ngFor="let participant_id of f?.['participant_id']?.value">
-        <div class="col-md-5 pr-0">
-          <div class="bg-box-1 d-flex">
-            <span class="align-self-center pr-5">{{ getUserName(participant_id) }}</span>
-            <span class="ml-auto mr-2 mt-1 cursor-pointer text-pink-500"
-            (click)="RemoveParticipant(participant_id)"
-            >
-              <i class="pi pi-trash" ></i>
-            </span>
-          </div>
+<div class="px-3" >
+  <div class="row ">
+    <p-avatar 
+      size="large" 
+      class="mr-3" 
+      icon="pi pi-calendar-plus" 
+      [style]="{'background-color': '#9c27b0', 'color': '#ffffff'}"
+    ></p-avatar> 
+      <p *ngIf="dateSelected.allDay" >
+        <span style="font-weight: bold"> Starts:</span> {{dateSelected.start | date:'d MMM y'}}<br>
+        <span style="font-weight: bold;">Ends:</span> {{dateSelected.end | date:'d MMM y'}}
+      </p>
+      <div *ngIf="!dateSelected.allDay" class="">
+        <p >
+          <span style="font-weight: bold">Starts:</span> {{dateSelected.start | date:'d MMM y, h:mm a'}}<br>
+          <span style="font-weight: bold">Ends:</span> {{dateSelected.end | date:'d MMM y, h:mm a'}}
+        </p>
+      </div>
+  </div>
+  <p-divider></p-divider>
+  <form [formGroup]="addMeeting" *ngIf="addMeeting">
+    <div class="row mb-2">
+      <div class="col-12 col-lg-6 pl-lg-0 mt-3">
+        <label>ชื่อการประชุม</label>
+        <input 
+          class="mr-2 form-control form-control-solid p-float-label"
+          type="text" 
+          pInputText 
+          formControlName="title"
+          [ngClass]="{'ng-invalid ng-dirty':submitted && f?.['title']?.errors}"
+        />
+        <!-- !err -->
+        <app-error-message 
+            [control]="f?.['title']"
+            nameField="ชื่อการประชุม"
+            [submitted]="submitted"
+        ></app-error-message>
+      </div>
+      <div class="col-12 col-lg-6 pl-lg-0 mt-3">
+        <label>ประเภทการประชุม</label>
+        <div>
+          <p-dropdown 
+            [options]="['online','onsite']"
+            [autoDisplayFirst]="false"
+            [style]="{'width': '100%'}"
+            class="mr-2"
+            formControlName="type"
+            [ngClass]="{'ng-invalid ng-dirty':submitted && f?.['type']?.errors}"
+          >
+            <ng-template let-type pTemplate="selectedItem">
+              <span *ngIf="type == 'online'" style="color:#1E90FF;"><i class="pi pi-compass" style="color:#1E90FF;"></i> ออนไลน์</span>
+              <span *ngIf="type == 'onsite'" style="color:#9c27b0;"><i class="pi pi-car" style="color:#9c27b0;"></i> ในสถานที่</span>
+            </ng-template>
+            <ng-template let-type pTemplate="item">
+              <span *ngIf="type == 'online'" style="color:#1E90FF;"><i class="pi pi-compass" style="color:#1E90FF;"></i> ออนไลน์</span>
+              <span *ngIf="type == 'onsite'" style="color:#9c27b0;"><i class="pi pi-car" style="color:#9c27b0;"></i> ในสถานที่</span>
+            </ng-template>
+          </p-dropdown>
+          <!-- !err -->
+          <app-error-message 
+            [control]="f?.['type']"
+            nameField="ประเภทการประชุม"
+            [submitted]="submitted"
+          ></app-error-message>
         </div>
       </div>
     </div>
+    <!-- row 1 -->
+    <div class="row mb-2">
+      <div class="col-12 col-lg-12 pl-lg-0">
+        <label>ลิ้งสำหรับการประชุม</label>
+        <input 
+          class="mr-2 form-control form-control-solid p-float-label"
+          type="text" 
+          pInputText 
+          formControlName="meeting_link"
+        />
+        <!-- !err -->
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-12 col-lg-12 pl-lg-0">
+        <label>รายละเอียดการประชุม</label>
+        <textarea 
+          pInputTextarea
+          class="mr-2 form-control form-control-solid p-float-label"
+          type="text"
+          formControlName="detail"
+          style="height: 120px;"
+        ></textarea>
+      </div>
+    </div>
+  </form>
+
+    <div class="row mb-2">
+      <div class="col-12 col-lg-6 pl-lg-0">
+        <label>เลือกผู้เข้าร่วมการประชุม</label>
+        <div>
+          <p-dropdown 
+            [options]="userAll"
+            [(ngModel)]="selectedUserId"
+            *ngIf="userAll"
+            optionValue="_id"
+            optionLabel="firstname"
+            [style]="{'width': '100%'}"
+            class="mr-2"
+            [autoDisplayFirst]="false"
+            emptyFilterMessage="ไม่มีบุคคลที่ต้องการ"
+            [filter]="true"
+            filterPlaceholder="ค้นหาด้วย ชื่อ,คำนำหน้า,นามสกุล"
+            filterBy="firstname,prename,lastname"
+          >
+            <ng-template let-user pTemplate="selectedItem">
+              {{user.prename}} {{user.firstname}} {{user.lastname}}
+            </ng-template>
+            <ng-template let-user pTemplate="item">
+              {{user.prename}} {{user.firstname}} {{user.lastname}}
+            </ng-template>
+          </p-dropdown>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6 pl-lg-0 align-self-end">
+        <button pButton pRipple (click)="handleSelectUser()" label="เพิ่ม"></button>
+      </div>
+      
+    </div>
+    
+    
+    <div class="row">
+      <div *ngIf="f?.['participant_id']?.value">
+        <div class="" *ngFor="let participant_id of f?.['participant_id']?.value">
+          <!-- <div class="col-md-5 pr-0"> -->
+            <div class="bg-box-1 d-flex">
+              <span class="align-self-center pr-5">{{ getUserName(participant_id) }}</span>
+              <span class="ml-auto mr-2 mt-1 cursor-pointer text-pink-500"
+              (click)="RemoveParticipant(participant_id)"
+              >
+                <i class="pi pi-trash" ></i>
+              </span>
+            </div>
+          <!-- </div> -->
+        </div>
+      </div>
+    </div>
+
+    <p-divider></p-divider>
+    <div class="row justify-content-end">
+      <div >
+          <button 
+              pButton
+              pRipple
+              type="button" 
+              class="p-button-raised p-button-success mr-3"
+              label="ยืนยันข้อมูล"
+              (click)="onSubmit()"
+          >
+          </button>
+          <button 
+              pButton
+              pRipple
+              type="button" 
+              class="p-button-raised"
+              label="ยกเลิก"
+              (click)="onCancel()"
+          >
+          </button>
+          
+      </div>
+  </div>
+
   </div>

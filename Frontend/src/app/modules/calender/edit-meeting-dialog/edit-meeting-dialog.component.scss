@@ -1,0 +1,11 @@
+:host ::ng-deep .p-dropdown {
+  height: 38px;
+  .p-placeholder {
+    // font-size: .8rem;
+    font-family: "Prompt", sans-serif;
+  }
+}
+
+:host ::ng-deep #DDstatus .p-dropdown {
+  height: inherit !important;
+}

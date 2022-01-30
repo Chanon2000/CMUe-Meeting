@@ -1,1 +1,18 @@
-<p>member works!</p>
+<div class="content__member">
+  <div class="friendList">
+    <p class="headText">Professor</p>
+
+    <div class="friendBox" *ngFor="let user of users">
+        <p class="personalName">{{user.prename}} {{user.firstname}} {{user.lastname}}</p>
+        <p class="personalInfo">
+          <span style="font-weight: bold;">Email:</span> {{user.email}}
+        </p>
+        <p-avatar 
+          label="P" 
+          size="xlarge" 
+          shape="circle"
+          class="ml-2"
+        ></p-avatar>
+    </div>
+  </div>
+</div>

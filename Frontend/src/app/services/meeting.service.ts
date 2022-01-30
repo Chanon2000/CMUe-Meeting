@@ -23,9 +23,35 @@ export class MeetingService {
     )
   }
 
+  getMeetingById(id:string) {
+    return this.http.get<any>(`${this.Urlport}/meeting/${id}`).pipe(
+      catchError(this.handlerError)
+    )
+  }
 
+  createMeeting(meetingObj:any) {
+    return this.http.post<any>(`${this.Urlport}/meeting`, meetingObj).pipe(
+      catchError(this.handlerError)
+    )
+  }
 
+  deleteMeeting(meeting_id:string) {
+    return this.http.delete<any>(`${this.Urlport}/meeting/${meeting_id}`).pipe(
+      catchError(this.handlerError)
+    )
+  }
 
+  updateMeeting(meeting_id:string, meetingObj:any) {
+    return this.http.put<any>(`${this.Urlport}/meeting/${meeting_id}`, meetingObj).pipe(
+      catchError(this.handlerError)
+    )
+  }
+
+  getMeetingMe(user_id:string) {
+    return this.http.post<any>(`${this.Urlport}/meeting/getMeetingMe`, { currentUser_id:user_id }).pipe(
+      catchError(this.handlerError)
+    )
+  }
 
   handlerError(error:HttpErrorResponse){
     console.log('💥 Error:')

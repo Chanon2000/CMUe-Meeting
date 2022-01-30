@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   loginForm?: FormGroup;
   submitted = false;
 
-  apiUrl:string = "http://localhost:3000"
+  // apiUrl:string = "http://localhost:3000"
 
   constructor(
     private primengConfig: PrimeNGConfig,
@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
         this.messageService.add({key:'alertLogin', severity:'success', summary:'เข้าสู่ระบบสำเร็จ' })
         // this.userVerify();
         setTimeout(() => {
-          this.router.navigate(['/admin/calender']);
+          this.router.navigate(['/admin/home']);
         }, 2000);
       }else{
         this.messageService.add({key:'alertLogin', severity:'error', summary:'เข้าสู่ระบบไม่สำเร็จ' })
@@ -70,21 +70,5 @@ export class LoginComponent implements OnInit {
     });
     
   }
-
-  // userVerify() {
-  //   this.userService.userVerify().subscribe((data: any) => {
-  //     if (data.statusCode === 200) {
-  //       localStorage.setItem('userDetails', JSON.stringify(data.payload));
-  //       setTimeout(() => {
-  //         this.router.navigate(['/admin']);
-  //       }, 2000);
-  //     }else{
-  //       this.router.navigate(['/login']);
-  //     }
-  //   },
-  //   error => {
-  //     this.router.navigate(['/login']);
-  //   })
-  // }
 
 }
